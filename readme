@@ -1,0 +1,45 @@
+Here's a short description. 
+
+The code is a C-version of Goldberg's Pascal GA in his book.
+
+1. after untarring, type 
+
+% make
+this should compile and link everything into an executable ==> ga, then type
+
+2. ga infile  
+will run the GA on a simple optimization problem, infile contains ga parameters
+you will be asked for a random seed between  0 and 1
+
+3. 0.45
+typed in the random seed. The ga will start producing output (statistics), on
+the screen and in the output file (ofile). NOTE: the output file is NOT erased
+every time you run the GA, new output is simply appended to the output file. 
+
+In step 3 you could also put your random seed in a file like "rx" and run the
+GA by typing
+
+3.5 ga infile < rx
+and you will not have to type in the random seed as it wil be read from "rx"
+If you don't want the screen output you can redirect it by typing
+
+3.6 ga infile < rx > /dev/null 
+which will get rid of all screen output. The statistics will still be stored in
+the output file (ofile).
+
+To put the GA in the background type
+
+3.7 ga infile < rx > /dev/null &
+you will get back the prompt,
+and you can inspect the results in the output file (ofile) the next day
+(later)! 
+
+comments on infile follow
+------------------------------------------------------------------------------
+50	; population size    (popsize)
+10      ; chromosome length  (lchrom)
+50	; number of generations to run (maxgen)
+0.66    ; prob of crossover   (pcross)
+0.001   ; prob of mutation    (pmut)
+ofile   ; name of output file (fname)
+------------------------------------------------------------------------------
