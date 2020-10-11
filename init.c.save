@@ -25,14 +25,14 @@ void initialize(char *argv[], POPULATION *p)
 
   //used to define const int conversion
   //printf("The size of integer is %lu\n", (unsigned long)sizeof(foo));
-  
+
   char *Ifile;
   int  nameLength = (int) strlen(argv[1]);
   Ifile = (char *) calloc(nameLength + 1, sizeof(char));
   strcpy(Ifile, argv[1]);
 
   initGa(Ifile, p);
-  printf("after initGa\n");
+  printf("after initData\n");
 
   initData(Ifile, p);
   printf("after initData\n");
@@ -63,8 +63,7 @@ void initData(char *Ifile, POPULATION *p)
   char buffer[100];
   char buffer1[100];
   int city;
-  int x;
-  int y;
+
   if( (inpfl = fopen(Ifile,"r")) == NULL){
     printf("error in opening file %s \n", Ifile);
     exit(1);
@@ -72,32 +71,42 @@ void initData(char *Ifile, POPULATION *p)
 
   for (i = 0 ; i < 3; i++)
   {
-   fgets(buffer, 100, inpfl);
+   fgets(buffer, 100, inpfl); 
   }
-  err = fscanf(inpfl,"%s %s %d",buffer, buffer1, &p->ndim);
+  err = fscanf(inpfl,"%s %s %i",buffer, buffer, &p->ndim);
 //  printf(" Enter name - name-> ");
 //  err = fscanf(inpfl,"%s %s %s",&buffer1[0],&buffer1[0],&buffer[0]);
   printf("Number of cities: %i\n",p->ndim);
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 1; i++)
   {
-   fgets(buffer, 100, inpfl);
+   fgets(buffer, 100, inpfl); 
   }
-  for ( i = 0 ; i < p->ndim; i++)
+  for (i = 0; i < p->ndim; i++)
   {
-    err = fscanf(inpfl,"%d %d %d",&city, &x, &y );
-    p->x[i] = x;
-    p->y[i] = y;
-    printf("City %d %d %d \n", i, x, y);
+    err = fscanf(inpfl,"%i %i %i, city, map.x[i], map.y[i] 
   }
+//  while(scanf("%i ", words) != EOF)
 
+  while(scanf("%15s", words) == 1)
+//  err = fscanf(inpfl
 
   fclose(inpfl);
   printf("\n");
 
+  randomize(p); 
+
+
+// initialize random number generator 
+
+
+// set progress indicators to zero 
+  p->highestEverFitness = 0.0;
+  p->highestEverGen = 0;
+  p->highestEverIndex = 0;
 
 }
 void initGa(char *Ifile, POPULATION *p)
-{ /* inittialize global params,
+{ /* inittialize global params, 
 
      popsize:   population size
      lchrom :   chromosome lenght
@@ -162,11 +171,10 @@ void initPop(POPULATION *p)
   int i, j;
   FILE *fp;
   double f1;
-  
+
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
 
-  
   for (i = 0; i < p->popSize; i++){
     pi = &(p->op[i]);
     pi->chrom = (int *) calloc (p->lchrom, sizeof(int));

@@ -43,6 +43,9 @@ typedef struct {
   int    popSize;/* population size */
 
   char  *ofile;  /* output File name */
-  int   x[1000];
-  int   y[1000];
 } POPULATION;
+
+typedef struct {
+  int x[1000];
+  int y[1000];
+} MAP;

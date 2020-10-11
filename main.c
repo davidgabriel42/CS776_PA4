@@ -11,7 +11,7 @@ void statistics(POPULATION *p, IPTR pop);
 
 main(int argc, char *argv[])
 {
-  IPTR tmp, op, np;
+  IPTR tmp, op, np, ndim;
   POPULATION population;
   POPULATION *p = &population;
 
