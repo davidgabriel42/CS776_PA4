@@ -17,8 +17,8 @@ double eval(POPULATION *p, IPTR pi);
 
 int foo;
 
-void initGa(POPULATION *p);
-void initData(Ifile,p);
+void initGa(char *inputFile, POPULATION *p);
+void initData(char *inputFile, POPULATION *p);
 void initPop(POPULATION *p);
 void initReport(POPULATION *p);
 
@@ -33,7 +33,7 @@ void initialize(char *argv[], POPULATION *p)
   Ifile = (char *) calloc(nameLength + 1, sizeof(char));
   strcpy(Ifile, argv[1]);
 
-  initGa( p);
+  initGa(Ifile, p);
   printf("after initData\n");
 
   initPop(p);
@@ -46,32 +46,37 @@ void initialize(char *argv[], POPULATION *p)
 
 }
 
-void initData(Ifile,p)
-{ /* inittialize global params, 
+void initData(char *Ifile, POPULATION *p)
+ { /* inittialize global params,
 
      popsize:   population size
      lchrom :   chromosome lenght
      maxgen :   maximum no. of generations.
      pcross :   crossover probability
      pmut   :   mutation probability           */
-/*
+
   int i;
   FILE *inpfl;
   char tmp[1024];
   int err;
-  
+  char buffer[100];
+  char buffer1[100];
+
   if( (inpfl = fopen(Ifile,"r")) == NULL){
     printf("error in opening file %s \n", Ifile);
     exit(1);
   }
 
-  printf(" Enter population size - popSize-> "); 
-  err = fscanf(inpfl,"%d",&p->popSize);
-  if(p->popSize % 2 != 0) {
-    p->popSize++;
+  for (i = 0 ; i < 3; i++)
+  {
+   fgets(buffer, 100, inpfl); 
   }
-  printf("\nNote population size must be even: %i", p->popSize);
+//  printf(" Enter name - name-> ");
+//  err = fscanf(inpfl,"%s %s %s",&buffer1[0],&buffer1[0],&buffer[0]);
+//  printf("%s\n",buffer	);
 
+
+  
   printf(" Enter chromosome length - lChrom-> "); 
   err = fscanf(inpfl,"%d",&p->lchrom);
   printf("\n");
@@ -109,9 +114,9 @@ void initData(Ifile,p)
   p->highestEverFitness = 0.0;
   p->highestEverGen = 0;
   p->highestEverIndex = 0;
-*/
+
 }
-void initGa( POPULATION *p)
+void initGa(char *Ifile, POPULATION *p)
 { /* inittialize global params, 
 
      popsize:   population size
