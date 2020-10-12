@@ -45,7 +45,6 @@ void initialize(char *argv[], POPULATION *p)
 
 void initData(char *Ifile, POPULATION *p)
  { /* inittialize global params,
-
      popsize:   population size
      lchrom :   chromosome lenght
      maxgen :   maximum no. of generations.
@@ -92,7 +91,6 @@ void initData(char *Ifile, POPULATION *p)
 }
 void initGa(char *Ifile, POPULATION *p)
 { /* inittialize global params,
-
      popsize:   population size
      lchrom :   chromosome lenght
      maxgen :   maximum no. of generations.
@@ -157,24 +155,24 @@ void initPop(POPULATION *p)
   FILE *fp;
   double f1;
   int cities[1000];
-printf("1");
+  printf("1");
   for (i = 0; i < p->ndim; i++)
   {
     cities[i] = i;
     //printf("cities %d \n", cities[i]);
-  }
-printf("2");
+  } 
+  printf("2");
   shuffle(cities, p->ndim);
-printf("3");
+  printf("3");
   for (i = 0; i < p->ndim; i++)
   {
     cities[i] = i;
 //    printf("cities %d \n", cities[i]);
   }
-printf("4");
+  printf("4");
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
-printf("5");
+  printf("5");
   for (i = 0; i < p->popSize; i++)
   {
     pi = &(p->op[i]);
@@ -183,23 +181,16 @@ printf("5");
     pj = &(p->np[i]);
     pj->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
-    for (j = 0; j < p->lchrom; j++){
 
-      i = j % bits_per_dimension;
+    for (j = 0; j < p->lchrom; j++)
+    {
+      int l = j % bits_per_dimension;
       k = floor(j/bits_per_dimension);
-      pi->chrom[j] = cities[k]& 1<<i;
-
-      /*      fprintf(stdout, "%1i", pi->chrom[j]); */
+      pi->chrom[j] = cities[k]& 1<<l;
     }
-//    printf("1 ");
-    pi->fitness  = eval(p, pi);
-//    printf("2 ");
-
-    /*    fprintf(stdout, " : fitness of %i = %lf\n", i, pi->fitness); */
-    
-    pi->parent1 = pi->parent2 = -1;
   }
-printf("6\n");
+  pi->fitness  = eval(p, pi);
+  pi->parent1 = pi->parent2 = -1;
 }
 
 
@@ -228,6 +219,7 @@ void initReport(POPULATION *p)
   rawStat(stdout, p, p->op);
 }
 
+
 void shuffle(int *array, size_t n)
 {
     if (n > 1) 
@@ -242,3 +234,4 @@ void shuffle(int *array, size_t n)
         }
     }
 }
+
