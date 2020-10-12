@@ -47,7 +47,7 @@ double binToDec(int *chrom, int l,POPULATION *p)
     {
 
       city = (int)prod;
-      printf("City: %d \n", city);
+//      printf("City: %d \n", city);
       x1 = x2;
       y1 = y2;
       x2 = p->x[city];
@@ -57,7 +57,7 @@ double binToDec(int *chrom, int l,POPULATION *p)
         xd = x2-x1;
         yd = y2-y1;
         dij =  round( sqrt( xd*xd + yd*yd) );
-        printf("dist %2.2f \n" , dij);
+//        printf("dist %2.2f \n" , dij);
       }
       skip = 1;
       sum += dij;
@@ -68,7 +68,7 @@ double binToDec(int *chrom, int l,POPULATION *p)
 //    printf("prod: %2.2f", prod);
   }
 //  printf("sum-sqs: %2.2f ", sum);
-  sum = 1000000 - sum;
+  sum = 100*p->ndim - sum;
   return sum;
 }
 
