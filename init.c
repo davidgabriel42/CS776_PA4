@@ -151,44 +151,49 @@ void initGa(char *Ifile, POPULATION *p)
 void initPop(POPULATION *p)
 { /* initialize a random population */
   IPTR pi, pj;
-  int i, j, k;
+  int i, j, k, l, kprev;
   FILE *fp;
   double f1;
   int cities[1000];
-  printf("1");
+  printf("-1-");
+
+
   for (i = 0; i < p->ndim; i++)
   {
     cities[i] = i;
     //printf("cities %d \n", cities[i]);
   } 
-  printf("2");
-  shuffle(cities, p->ndim);
-  printf("3");
+  
+  printf("-2-");
   for (i = 0; i < p->ndim; i++)
   {
-    cities[i] = i;
-//    printf("cities %d \n", cities[i]);
+    j = 0;
+//    printf("%d:%d,",i, cities[i]);
   }
-  printf("4");
+  printf("-3-");
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
-  printf("5");
+  printf("-4-");
   for (i = 0; i < p->popSize; i++)
   {
+    shuffle(cities, p->ndim);
     pi = &(p->op[i]);
     pi->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
     pj = &(p->np[i]);
     pj->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
-
     for (j = 0; j < p->lchrom; j++)
     {
-      int l = j % bits_per_dimension;
+      l = j % bits_per_dimension;
       k = floor(j/bits_per_dimension);
-      pi->chrom[j] = cities[k]& 1<<l;
+      if (k != kprev){printf(" \n %d \n", cities[k]); }
+      kprev = k;
+      pi->chrom[j] = (cities[k] &  1<<l ) >>l ;
+      printf(" %d ", pi->chrom[j]);
     }
   }
+
   pi->fitness  = eval(p, pi);
   pi->parent1 = pi->parent2 = -1;
 }
@@ -218,7 +223,6 @@ void initReport(POPULATION *p)
   }
   rawStat(stdout, p, p->op);
 }
-
 
 void shuffle(int *array, size_t n)
 {

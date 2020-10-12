@@ -31,11 +31,11 @@ void crossover(POPULATION *p, IPTR p1, IPTR p2, IPTR c1, IPTR c2)
       xp2 = swp;
 
     }
-    printf("%d \t %d \t xp", xp1,xp2);
-    printf("p1 \t p2 \t");
+    printf("%d \t %d \t xp\n", xp1,xp2);
+    printf("p1 \t p2 \t\n");
     for(i = 0; i < p->lchrom;i++)
     {
-      printf("%d\t%d\t", pi1[i],pi2[i]);
+      printf("%d\t%d\t\n", pi1[i],pi2[i]);
     }
 //1
     for(i = xp1; i < xp2; i++)
@@ -88,12 +88,22 @@ void crossover(POPULATION *p, IPTR p1, IPTR p2, IPTR c1, IPTR c2)
         }
       }//endif
     }
-    printf("c1 \t c2 \t");
+    printf("c1 \t c2 \t\n");
     for(i = 0; i < p->lchrom;i++)
     {
-      printf("%d \t %d \t", ci1[i],ci2[i]);
+      printf("%d \t %d \t\n", ci1[i],ci2[i]);
     }
   }//endif
+
+  if(flip(p->pMut))
+  {
+    xp1 = rnd(0, p->lchrom - 1);
+      swp = ci1[xp1];
+      ci1[xp1] = ci1[(xp1+1)%p->lchrom];
+      ci1[(xp1+1)%p->lchrom] = swp;
+    
+  }//endif
+
 }
 
 int muteX(POPULATION *p, int pa, int pb)
