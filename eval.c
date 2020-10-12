@@ -51,9 +51,10 @@ double binToDec(int *chrom, int l,POPULATION *p)
       x1 = x2;
       y1 = y2;
       x2 = p->x[city];
+      y2 = p->y[city];
+
       printf("x:%d\t",p->x[city]);
       printf("y:%d\t",p->y[city]);
-      y2 = p->y[city];
       if(skip)
       {
         xd = x2-x1;
