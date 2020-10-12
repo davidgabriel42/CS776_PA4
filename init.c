@@ -3,6 +3,7 @@
 #include <string.h>
 #define INFILE  "infile"
 #include "type.h"
+#include "math.h"
 #define bits_per_dimension 32
 
 int flip(double p);
@@ -27,19 +28,19 @@ void initialize(char *argv[], POPULATION *p)
   strcpy(Ifile, argv[1]);
 
   initGa(Ifile, p);
-  printf("after initGa\n");
+  printf("after initGa \n");
 
   initData(Ifile, p);
-  printf("after initData\n");
-
+  printf("after initData \n");
+  printf("0");
   initPop(p);
-  printf("after initPOP\n");
+  printf("after initPOP \n");
 
   statistics(p, p->op);
-  printf("after STATS\n");
+  printf("after STATS \n");
 
   initReport(p);
-
+  printf("init complete\n");
 }
 
 void initData(char *Ifile, POPULATION *p)
@@ -79,10 +80,10 @@ void initData(char *Ifile, POPULATION *p)
   }
   for ( i = 0 ; i < p->ndim; i++)
   {
-    err = fscanf(inpfl,"%d %d %d",&city, &x, &y );
+    err = fscanf(inpfl,"%d %d %d", &city, &x, &y );
     p->x[i] = x;
     p->y[i] = y;
-    printf("City %d %d %d \n", i, x, y);
+//    printf("City %d %d %d \n", i, x, y);
   }
 
   fclose(inpfl);
@@ -107,30 +108,30 @@ void initGa(char *Ifile, POPULATION *p)
     exit(1);
   }
 
-  printf(" Enter population size - popSize-> "); 
+//  printf(" Enter population size - popSize-> "); 
   err = fscanf(inpfl,"%d",&p->popSize);
   if(p->popSize % 2 != 0) {
     p->popSize++;
   }
-  printf("\nNote population size must be even: %i", p->popSize);
+//  printf("\nNote population size must be even: %i", p->popSize);
 
-  printf(" Enter chromosome length - lChrom-> "); 
+//  printf(" Enter chromosome length - lChrom-> "); 
   err = fscanf(inpfl,"%d",&p->lchrom);
-  printf("\n");
+//  printf("\n");
 
-  printf(" Enter max. generations - maxGen-> "); 
+//  printf(" Enter max. generations - maxGen-> "); 
   err = fscanf(inpfl,"%d",&p->maxGen);
-  printf("\n");
+//  printf("\n");
 
-  printf(" Enter crossover prob - pCross-> "); 
+//  printf(" Enter crossover prob - pCross-> "); 
   err = fscanf(inpfl,"%lf",&p->pCross);
-  printf("\n");
+//  printf("\n");
 
-  printf(" Enter mutation prob - pMut-> "); 
+//  printf(" Enter mutation prob - pMut-> "); 
   err = fscanf(inpfl,"%lf",&p->pMut);
-  printf("\n");
+//  printf("\n");
 
-  printf(" Enter file name for graph output -fname-> ");
+//  printf(" Enter file name for graph output -fname-> ");
 
   err = fscanf(inpfl,"%s", tmp);
   p->ofile = (char *) calloc ((int) strlen(tmp)+1, sizeof(char));
@@ -156,24 +157,24 @@ void initPop(POPULATION *p)
   FILE *fp;
   double f1;
   int cities[1000];
-
+printf("1");
   for (i = 0; i < p->ndim; i++)
   {
     cities[i] = i;
     //printf("cities %d \n", cities[i]);
   }
-
+printf("2");
   shuffle(cities, p->ndim);
-
+printf("3");
   for (i = 0; i < p->ndim; i++)
   {
-//    cities[i] = i;
-    printf("cities %d \n", cities[i]);
+    cities[i] = i;
+//    printf("cities %d \n", cities[i]);
   }
-
+printf("4");
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
-
+printf("5");
   for (i = 0; i < p->popSize; i++)
   {
     pi = &(p->op[i]);
@@ -190,14 +191,15 @@ void initPop(POPULATION *p)
 
       /*      fprintf(stdout, "%1i", pi->chrom[j]); */
     }
-
+//    printf("1 ");
     pi->fitness  = eval(p, pi);
-
+//    printf("2 ");
 
     /*    fprintf(stdout, " : fitness of %i = %lf\n", i, pi->fitness); */
     
     pi->parent1 = pi->parent2 = -1;
   }
+printf("6\n");
 }
 
 

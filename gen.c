@@ -22,7 +22,7 @@ int generation(POPULATION *p, int t)
     piPlus1 = &(p->np[i+1]);
     om1 = &(p->op[p1]);
     om2 = &(p->op[p2]);
-
+    printf("----");
     crossover(p, om1, om2, pi, piPlus1);
 
     pi->fitness = eval(p, pi); 
