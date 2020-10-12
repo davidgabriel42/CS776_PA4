@@ -3,14 +3,14 @@
 
 int rnd(int low, int high);
 int flip(double);
-int muteX(POPULATION *p, int pa, int pb);
+//int muteX(POPULATION *p, int pa, int pb);
 
 void crossover(POPULATION *p, IPTR p1, IPTR p2, IPTR c1, IPTR c2)
 {
 //pmx
 /* p1,p2,c1,c2,m1,m2,mc1,mc2 */
   int *pi1,*pi2,*ci1,*ci2;
-  int xp1, xp2, i, swp;
+  int xp1, xp2, i, swp, addr;
   int pmx1[p->lchrom], pmx2[p->lchrom];
   int match;
 
@@ -31,12 +31,14 @@ void crossover(POPULATION *p, IPTR p1, IPTR p2, IPTR c1, IPTR c2)
       xp2 = swp;
 
     }
-    printf("%d \t %d \t xp\n", xp1,xp2);
-    printf("p1 \t p2 \t\n");
+/*
+    printf("xover: %d \t %d \t xp\n", xp1,xp2);
+    printf("xover: p1 \t p2 \t \n");
     for(i = 0; i < p->lchrom;i++)
     {
-      printf("%d\t%d\t\n", pi1[i],pi2[i]);
+      printf("xover:%d:: %d\t%d\t\n", i, pi1[i],pi2[i]);
     }
+*/
 //1
     for(i = xp1; i < xp2; i++)
     {
@@ -88,24 +90,45 @@ void crossover(POPULATION *p, IPTR p1, IPTR p2, IPTR c1, IPTR c2)
         }
       }//endif
     }
-    printf("c1 \t c2 \t\n");
+/*
+    printf("xover: c1 \t c2 \t\n");
     for(i = 0; i < p->lchrom;i++)
     {
-      printf("%d \t %d \t\n", ci1[i],ci2[i]);
+      printf("xover:%d:: %d \t %d \t\n", i, ci1[i], ci2[i]);
     }
+*/
   }//endif
 
-  if(flip(p->pMut))
+//mutation, swap cities in path
+//0-1-2-3M4-5 -> 0-1-2-4-3-5
+//wraps around chrom
+
+  for(i = 0; i < p->ndim; i++)
   {
-    xp1 = rnd(0, p->lchrom - 1);
-      swp = ci1[xp1];
-      ci1[xp1] = ci1[(xp1+1)%p->lchrom];
-      ci1[(xp1+1)%p->lchrom] = swp;
-    
-  }//endif
+    if(flip(p->pMut))
+    {
+      for(int j = 0; j < bits_per_dim; j ++)
+      {
+        addr = i*bits_per_dim + j;
+        swp = ci1[addr];
+        ci1[addr] = ci1[(addr+bits_per_dim)%p->lchrom];
+        ci1[(addr+bits_per_dim)%p->lchrom] = swp;
+      }
+    }
+    if(flip(p->pMut))
+    {
+      for(int j = 0; j < bits_per_dim; j ++)
+      {
+        swp = ci2[i+j];
+        ci2[i+j] = ci2[(i+j+bits_per_dim)%p->lchrom];
+        ci2[(i+j+bits_per_dim)%p->lchrom] = swp;
+      }
 
+    }//endif
+  }
 }
 
+//not used
 int muteX(POPULATION *p, int pa, int pb)
 {
   return (flip(p->pMut) ? 1 - pa  : pa);

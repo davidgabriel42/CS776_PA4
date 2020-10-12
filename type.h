@@ -1,3 +1,4 @@
+#define bits_per_dim 32
 
 
 typedef struct {

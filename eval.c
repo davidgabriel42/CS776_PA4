@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "type.h"
-#define bits_per_dim 32
-
+#define offset 100000
 double decode(IPTR pj, int index, int size,POPULATION *p);
 double binToDec(int *chrom, int l,POPULATION *p);
 
@@ -68,7 +67,7 @@ double binToDec(int *chrom, int l,POPULATION *p)
 //    printf("prod: %2.2f", prod);
   }
 //  printf("sum-sqs: %2.2f ", sum);
-  sum = 100*p->ndim - sum;
+  sum = offset - sum;
   return sum;
 }
 

@@ -187,10 +187,10 @@ void initPop(POPULATION *p)
     {
       l = j % bits_per_dimension;
       k = floor(j/bits_per_dimension);
-      if (k != kprev){printf(" \n %d \n", cities[k]); }
-      kprev = k;
+//      if (k != kprev){printf(" \n %d \n", cities[k]); }
+//      kprev = k;
       pi->chrom[j] = (cities[k] &  1<<l ) >>l ;
-      printf(" %d ", pi->chrom[j]);
+//      printf(" %d ", pi->chrom[j]);
     }
   }
 
