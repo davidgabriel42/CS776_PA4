@@ -176,13 +176,13 @@ void initPop(POPULATION *p)
   printf("-4-");
   for (i = 0; i < p->popSize; i++)
   {
-    shuffle(cities, p->ndim);
     pi = &(p->op[i]);
     pi->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
     pj = &(p->np[i]);
     pj->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
+    shuffle(cities, p->ndim);
     for (j = 0; j < p->lchrom; j++)
     {
       l = j % bits_per_dimension;
@@ -190,6 +190,16 @@ void initPop(POPULATION *p)
 //      if (k != kprev){printf(" \n %d \n", cities[k]); }
 //      kprev = k;
       pi->chrom[j] = (cities[k] &  1<<l ) >>l ;
+//      printf(" %d ", pi->chrom[j]);
+    }
+    shuffle(cities, p->ndim);
+    for (j = 0; j < p->lchrom; j++)
+    {
+      l = j % bits_per_dimension;
+      k = floor(j/bits_per_dimension);
+//      if (k != kprev){printf(" \n %d \n", cities[k]); }
+//      kprev = k;
+      pj->chrom[j] = (cities[k] &  1<<l ) >>l ;
 //      printf(" %d ", pi->chrom[j]);
     }
   }

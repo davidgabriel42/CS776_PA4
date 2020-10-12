@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "type.h"
-#define offset 100000
+#define offset 10000.0
 double decode(IPTR pj, int index, int size,POPULATION *p);
 double binToDec(int *chrom, int l,POPULATION *p);
 
@@ -46,7 +46,7 @@ double binToDec(int *chrom, int l,POPULATION *p)
     {
 
       city = (int)prod;
-//      printf("City: %d \n", city);
+      printf("City: %d \n", city);
       x1 = x2;
       y1 = y2;
       x2 = p->x[city];
@@ -61,13 +61,14 @@ double binToDec(int *chrom, int l,POPULATION *p)
       skip = 1;
       sum += dij;
       prod = 0;
-
+      printf("%f-", dij);
     }
     prod += (chrom[i] == 0 ? 0.0 : pow((double)2.0, (double) j));
 //    printf("prod: %2.2f", prod);
   }
 //  printf("sum-sqs: %2.2f ", sum);
   sum = offset - sum;
+  printf("\n%f\n", sum);
   return sum;
 }
 
