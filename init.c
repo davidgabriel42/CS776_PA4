@@ -3,23 +3,18 @@
 #include <string.h>
 #define INFILE  "infile"
 #include "type.h"
+#define bits_per_dimension 32
 
 int flip(double p);
 void randomize(POPULATION *p);
-
 void statistics(POPULATION *p, IPTR pop);
-
 void rawStat(FILE *fp, POPULATION *p, IPTR pop);
-
 double eval(POPULATION *p, IPTR pi);
-
-int foo;
-
+void shuffle(int *array, size_t n);
 void initGa(char *inputFile, POPULATION *p);
 void initData(char *inputFile, POPULATION *p);
 void initPop(POPULATION *p);
 void initReport(POPULATION *p);
-
 void initialize(char *argv[], POPULATION *p)
 { /* initialize everything */
 
@@ -90,10 +85,8 @@ void initData(char *Ifile, POPULATION *p)
     printf("City %d %d %d \n", i, x, y);
   }
 
-
   fclose(inpfl);
   printf("\n");
-
 
 }
 void initGa(char *Ifile, POPULATION *p)
@@ -108,7 +101,7 @@ void initGa(char *Ifile, POPULATION *p)
   FILE *inpfl;
   char tmp[1024];
   int err;
-  
+
   if( (inpfl = fopen(INFILE,"r")) == NULL){
     printf("error in opening file %s \n", INFILE);
     exit(1);
@@ -159,15 +152,30 @@ void initGa(char *Ifile, POPULATION *p)
 void initPop(POPULATION *p)
 { /* initialize a random population */
   IPTR pi, pj;
-  int i, j;
+  int i, j, k;
   FILE *fp;
   double f1;
-  
+  int cities[1000];
+
+  for (i = 0; i < p->ndim; i++)
+  {
+    cities[i] = i;
+    //printf("cities %d \n", cities[i]);
+  }
+
+  shuffle(cities, p->ndim);
+
+  for (i = 0; i < p->ndim; i++)
+  {
+//    cities[i] = i;
+    printf("cities %d \n", cities[i]);
+  }
+
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
 
-  
-  for (i = 0; i < p->popSize; i++){
+  for (i = 0; i < p->popSize; i++)
+  {
     pi = &(p->op[i]);
     pi->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
@@ -175,10 +183,14 @@ void initPop(POPULATION *p)
     pj->chrom = (int *) calloc (p->lchrom, sizeof(int));
 
     for (j = 0; j < p->lchrom; j++){
-      pi->chrom[j] = flip(0.5); 
+
+      i = j % bits_per_dimension;
+      k = floor(j/bits_per_dimension);
+      pi->chrom[j] = cities[k]& 1<<i;
+
       /*      fprintf(stdout, "%1i", pi->chrom[j]); */
     }
-    
+
     pi->fitness  = eval(p, pi);
 
 
@@ -214,3 +226,17 @@ void initReport(POPULATION *p)
   rawStat(stdout, p, p->op);
 }
 
+void shuffle(int *array, size_t n)
+{
+    if (n > 1) 
+    {
+        size_t i;
+        for (i = 0; i < n - 1; i++) 
+        {
+          size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+          int t = array[j];
+          array[j] = array[i];
+          array[i] = t;
+        }
+    }
+}
