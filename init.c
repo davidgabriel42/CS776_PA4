@@ -28,16 +28,16 @@ void initialize(char *argv[], POPULATION *p)
   strcpy(Ifile, argv[1]);
 
   initGa(Ifile, p);
-  printf("after initGa \n");
+//  printf("after initGa \n");
 
   initData(Ifile, p);
-  printf("after initData \n");
-  printf("0");
+//  printf("after initData \n");
+//  printf("0");
   initPop(p);
-  printf("after initPOP \n");
+//  printf("after initPOP \n");
 
   statistics(p, p->op);
-  printf("after STATS \n");
+//  printf("after STATS \n");
 
   initReport(p);
   printf("init complete\n");
@@ -155,7 +155,7 @@ void initPop(POPULATION *p)
   FILE *fp;
   double f1;
   int cities[1000];
-  printf("-1-");
+//  printf("-1-");
 
 
   for (i = 0; i < p->ndim; i++)
@@ -164,16 +164,16 @@ void initPop(POPULATION *p)
     //printf("cities %d \n", cities[i]);
   } 
   
-  printf("-2-");
+//  printf("-2-");
   for (i = 0; i < p->ndim; i++)
   {
     j = 0;
 //    printf("%d:%d,",i, cities[i]);
   }
-  printf("-3-");
+//  printf("-3-");
   p->op = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
   p->np = (IPTR) calloc (p->popSize, sizeof(INDIVIDUAL));
-  printf("-4-");
+//  printf("-4-");
   for (i = 0; i < p->popSize; i++)
   {
     pi = &(p->op[i]);
