@@ -3,7 +3,6 @@
 #define INFILE  "infile"
 #include "type.h"
 
-double *base_arr;
 
 
 void initialize(char *argv[], POPULATION *p);
