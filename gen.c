@@ -23,7 +23,7 @@ int generation(POPULATION *p, int t)
   for(i = 0; i < p->popSize; i ++)
   {
     sort_me[i] = p->op[i].fitness ;
-    printf("%f ",sort_me[i]);
+    //printf("%f ",sort_me[i]);
   }
 
 //  printf ("begin gen: ");
@@ -51,14 +51,29 @@ int generation(POPULATION *p, int t)
 //    printf("----");
     crossover(p, om1, om2, pi, piPlus1);
 
-    pi->fitness = eval(p, pi); 
-    pi->parent1 = p1;
-    pi->parent2 = p2;
+    pi->fitness = eval(p, pi);
+    if(pi->fitness < om1->fitness)
+    {
+      pi = om1;
+    }
 
-    
+    if(pi->fitness < om2->fitness)
+    {
+      pi = om2;
+    }
+
     piPlus1->fitness = eval(p, piPlus1);
-    piPlus1->parent1 = p2;
-    piPlus1->parent2 = p1;
+
+    if(piPlus1->fitness < om1->fitness)
+    {
+      piPlus1 = om1;
+    }
+
+    if(piPlus1->fitness < om2->fitness)
+    {
+      piPlus1 = om2;
+    }
+
 
   }
 

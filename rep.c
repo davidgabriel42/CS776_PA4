@@ -25,10 +25,11 @@ void report(int gen, POPULATION *p, IPTR  pop)
 void rawStat(FILE *fp, POPULATION *p, IPTR pop)
 {
   int err;
-  err = fprintf(fp,"gen: %3d max: %10.2lf avg: %10.2lf min: %10.2lf ", p->gen, p->max, 
+  err = fprintf(fp," %3.0d,%10.2lf,%10.2lf,%10.2lf,", p->gen, p->max, 
 	  p->avg, p->min);
-  err = fprintf(fp,"max gen: %3d max indiv: %10.2lf max index: %3d", p->highestEverGen,  p->highestEverFitness, 
+  err = fprintf(fp," %3.0d,%10.2lf,%3.0d", p->highestEverGen,  p->highestEverFitness, 
 	  p->highestEverIndex);
-  err = fprintf(fp," %10.2lf\n", pop[p->maxi].fitness);
+  err = fprintf(fp,",%10.2lf\n", pop[p->maxi].fitness);
 }
+
 

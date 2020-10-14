@@ -26,7 +26,7 @@ double decode(IPTR pj, int index, int size,POPULATION *p)
 
 double binToDec(int *chrom, int l,POPULATION *p)
 {
-  double x[1000];
+
   int i;
   int j = 0;
   int k = 0;
@@ -72,6 +72,8 @@ double binToDec(int *chrom, int l,POPULATION *p)
   }
 //  printf("sum-sqs: %2.2f ", sum);
   sum = offset - sum;
+  if (sum < 0){sum = 0.0;}
+  if (sum > offset){sum = 0.0;}
 //  printf("\n%f\n", sum);
   return sum;
 }

@@ -21,20 +21,13 @@ main(int argc, char *argv[])
   initialize(argv, p);
   printf("beginning \n");
   while(p->gen < p->maxGen){
-    printf(".");
     p->gen++;
-    printf(".");
     generation(p, p->gen);
-    printf(".");
     statistics(p, p->np);
-    printf(".");
     report(p->gen, p, p->np);
-    printf(".");
     tmp = p->op;
-    printf(".");
     p->op = p->np;
-    printf(".");
     p->np = tmp;
-    printf(". \n");
+
   }
 }
